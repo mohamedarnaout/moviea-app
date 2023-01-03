@@ -4,14 +4,9 @@ import CardList from "./Components/CardList/CardList";
 function App() {
   const [movies, setMovies] = useState([]);
   const [searchField, setSearchField] = useState("spider-man");
-
-  let inputRef = useRef(null);
+  const inputRef = useRef(null);
   function handleChange() {
-    let inputValue = inputRef.current.value;
-    console.log(inputValue.length);
-
-    setSearchField(inputValue);
-    console.log(searchField);
+    setSearchField(inputRef.current.value);
   }
 
   useEffect(() => {
@@ -23,13 +18,13 @@ function App() {
       setMovies(data.Search);
     }
     fetchData();
-  }, []);
+  }, [searchField]);
   return (
     <div>
       <input
         type="text"
         ref={inputRef}
-        onChange={handleChange}
+        onBlur={handleChange}
         className="search-box"
       />
       <CardList movies={movies} />
